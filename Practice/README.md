@@ -19,7 +19,7 @@ mirroring real SOC shift conditions.
 | [SOC-Sim-003](./SOC-Sim-003-Insider-Threat-Data-Exfil/) | Insider Threat → Data Exfil | Simulated | Complete |
 | [SOC-Sim-004](./SOC-Sim-004-Mixed-Shift-Triage/) | Mixed Shift Triage | Simulated | Complete |
 | [SOC-Sim-005](./SOC-Sim-005-WebShell-AntiForensics/) | WebShell → AntiForensics | Simulated | Complete |
-| [SOC-Sim-006](./SOC-Sim-006-Phishing-AsyncRAT/) | Phishing → AsyncRAT C2 | Real IOCs ✅ | Complete |
+| [SOC-Sim-006](./SOC-Sim-006-Phishing-AsyncRAT/) | Phishing → AsyncRAT C2 | Real IOCs | Complete |
 
 ---
 
