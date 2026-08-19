@@ -26,7 +26,7 @@ A phishing email was delivered to user **Felix (Felix@letsdefend.io)** using a s
 | Identified Malware | **AsyncRAT** (Remote Access Trojan) |
 | C2 IP | 37.120.233.226:3451/TCP |
 
-![Alert Detail](screenshots/01-alert-detail.png)
+![Alert Detail](soc282-screenshots/01-alert-detail.png)
 *SIEM alert detail — SOC282, EventID 257, phishing email from free@coffeeshooop.com to Felix.*
 
 ---
@@ -55,7 +55,7 @@ The phishing email was reviewed directly. It impersonated a coffee shop promotio
 
 Exchange raw log confirms sender infrastructure:
 
-![Exchange Log](screenshots/03-exchange-log.png)
+![Exchange Log](soc282-screenshots/03-exchange-log.png)
 *Raw Exchange log — sender 103.80.134.63, free@coffeeshooop.com → Felix@letsdefend.io, port 25.*
 
 - **Sender domain:** `coffeeshooop.com` — a typosquat/lookalike domain (extra "o"), a classic phishing infrastructure pattern.
@@ -67,13 +67,13 @@ The "Redeem Now" button pointed to a redirector rather than the payload directly
 https://download.cyberlearn.academy/download/download?url=https://files-ld.s3.us-east-2.amazonaws.com/59cbd215-76ea-434d-93ca-4d6aec3bac98-free-coffee.zip
 ```
 
-![VirusTotal Redirect URL](screenshots/04-vt-redirect-url.png)
+![VirusTotal Redirect URL](soc282-screenshots/04-vt-redirect-url.png)
 *VirusTotal — redirect URL flagged 12/92 vendors as malicious/malware/phishing.*
 
 ### 3.3 Proxy Log — Confirming User Interaction
 The proxy log confirms Felix's host actually reached out and downloaded the payload:
 
-![Proxy Log](screenshots/05-proxy-log.png)
+![Proxy Log](soc282-screenshots/05-proxy-log.png)
 *Proxy log — 172.16.20.151 (Felix, chrome.exe) requested the S3-hosted zip at 12:59:44 PM, port 443, Action: Allowed.*
 
 This is the key piece of evidence proving the user clicked the link and the download succeeded — not just that the email arrived.
@@ -81,7 +81,7 @@ This is the key piece of evidence proving the user clicked the link and the down
 ### 3.4 Payload URL Threat Intelligence
 The actual hosting URL for the payload was checked separately from the redirector:
 
-![VirusTotal Payload URL](screenshots/06-vt-payload-url.png)
+![VirusTotal Payload URL](soc282-screenshots/06-vt-payload-url.png)
 *VirusTotal — payload hosting URL (files-ld.s3...amazonaws.com) flagged 10/92 vendors. Crowdsourced context: "Activity related to SILENTBUILDER" (source: Cluster25) — a dropper/downloader used by a Conti subgroup. The delivered file masquerades as a Notepad++ installer.*
 
 **Two distinct threat-intel findings here, not one:**
@@ -91,7 +91,7 @@ The actual hosting URL for the payload was checked separately from the redirecto
 ### 3.5 Sandbox Analysis (ANY.RUN)
 The downloaded file was detonated in a sandbox for behavioral confirmation:
 
-![ANY.RUN AsyncRAT](screenshots/07-anyrun-asyncrat.png)
+![ANY.RUN AsyncRAT](soc282-screenshots/07-anyrun-asyncrat.png)
 *ANY.RUN — Verdict: Malicious activity. Threat identified: **AsyncRAT** (Remote Access Trojan). OS: Windows 10 Pro (build 19044, 64-bit).*
 
 | Hash Type | Value |
@@ -103,10 +103,10 @@ The downloaded file was detonated in a sandbox for behavioral confirmation:
 ### 3.6 Firewall Logs — Confirming C2 Communication
 Two firewall log entries were found for outbound connections from Coffee.exe to the same C2 IP and port:
 
-![Firewall Deny](screenshots/08-firewall-deny.png)
+![Firewall Deny](soc282-screenshots/08-firewall-deny.png)
 *172.16.20.151 → 127.0.0.1:3451/TCP — FW Deny — Process: Coffee.exe*
 
-![Firewall Permit](screenshots/09-firewall-permit.png)
+![Firewall Permit](soc282-screenshots/09-firewall-permit.png)
 *172.16.20.151 → 37.120.233.226:3451/TCP — **FW Permit** — Process: Coffee.exe*
 
 **Finding:** Coffee.exe made two outbound connection attempts on port 3451/TCP. One was denied (to a loopback/internal address) and one — to the actual external C2 IP `37.120.233.226` — was **permitted**. This confirms the C2 channel was successfully established, not just attempted.
