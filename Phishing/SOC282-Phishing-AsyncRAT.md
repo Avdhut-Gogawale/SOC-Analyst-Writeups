@@ -50,7 +50,7 @@ A phishing email was delivered to user **Felix (Felix@letsdefend.io)** using a s
 ### 3.1 Email / Exchange Log Review
 The phishing email was reviewed directly. It impersonated a coffee shop promotion, using urgency language ("Hurry, this offer expires soon!") and a call-to-action button to drive the user to click.
 
-![Phishing Email](screenshots/02-phishing-email.png)
+![Phishing Email](soc282-screenshots/02-phishing-email.png)
 *"Free Coffee Voucher" phishing email — social engineering lure with "Redeem Now" button.*
 
 Exchange raw log confirms sender infrastructure:
