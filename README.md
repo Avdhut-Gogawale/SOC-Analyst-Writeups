@@ -28,16 +28,16 @@ I'm Avdhut Gogawale, a recent Electronics and Telecommunication Engineering grad
 
 | Alert ID | Title | Category | Severity | Key Technique |
 |---|---|---|---|---|
-| [SOC176](Investigations/Brute-Force/SOC176-RDP-Brute-Force/) | RDP Brute Force Detected | Brute Force | Medium | T1110 – Brute Force, weak username matching hostname |
-| [SOC246](Investigations/Brute-Force/SOC246-Forced-Authentication/) | Forced Authentication Detected | Brute Force | Medium | T1110 – Web login brute force, plaintext HTTP credential exposure |
-| [SOC282](Investigations/Phishing/SOC282-Phishing-AsyncRAT/) | Phishing Alert – Deceptive Mail Detected | Phishing | Medium → Critical | AsyncRAT delivery, confirmed C2 callback |
-| [SOC275](Investigations/Phishing/SOC275-Application-Token-Steal-Attempt/) | Application Token Steal Attempt Detected | Phishing | Medium | Discord-themed credential/token phishing |
-| [SOC251](Investigations/Phishing/SOC251-Quishing-QR-Phishing/) | Quishing Detected (QR Code Phishing) | Phishing | Medium | T1566.002 – QR-code phishing, IPFS-hosted payload |
-| [SOC326](Investigations/Phishing/SOC326-Impersonating-Domain-MX-Change/) | Impersonating Domain MX Record Change Detected | Phishing | Medium | Typosquat domain, CTI-driven detection |
-| [SOC336](Investigations/Malware/SOC336-CVE-2025-21298-Zero-Click-RCE/) | Windows OLE Zero-Click RCE Detected (CVE-2025-21298) | Malware | Critical | Zero-click RCE, regsvr32 "Squiblydoo", Sliver C2 |
-| [SOC338](Investigations/Malware/SOC338-Lumma-Stealer-ClickFix/) | Lumma Stealer – DLL Side-Loading via Click Fix Phishing | Malware | Critical | ClickFix technique, Emmenhtal loader, disguised payload |
-| [SOC335](Investigations/Malware/SOC335-CVE-2024-49138-Privilege-Escalation/) | CVE-2024-49138 Exploitation Detected | Malware | Medium → Critical | RDP brute force → CLFS privilege escalation to SYSTEM |
-| [SOC250](Investigations/Data-Leakage/SOC250-APT35-HyperScrape/) | APT35 HyperScrape Data Exfiltration Tool Detected | Data Leakage | Medium → Critical | Nation-state actor (Charming Kitten), confirmed mailbox exfiltration |
+| [SOC176](Brute-Force/SOC176-RDP-Brute-Force/) | RDP Brute Force Detected | Brute Force | Medium | T1110 – Brute Force, weak username matching hostname |
+| [SOC246](Brute-Force/SOC246-Forced-Authentication/) | Forced Authentication Detected | Brute Force | Medium | T1110 – Web login brute force, plaintext HTTP credential exposure |
+| [SOC282](Phishing/SOC282-Phishing-AsyncRAT/) | Phishing Alert – Deceptive Mail Detected | Phishing | Medium → Critical | AsyncRAT delivery, confirmed C2 callback |
+| [SOC275](Phishing/SOC275-Application-Token-Steal-Attempt/) | Application Token Steal Attempt Detected | Phishing | Medium | Discord-themed credential/token phishing |
+| [SOC251](Phishing/SOC251-Quishing-QR-Phishing/) | Quishing Detected (QR Code Phishing) | Phishing | Medium | T1566.002 – QR-code phishing, IPFS-hosted payload |
+| [SOC326](Phishing/SOC326-Impersonating-Domain-MX-Change/) | Impersonating Domain MX Record Change Detected | Phishing | Medium | Typosquat domain, CTI-driven detection |
+| [SOC336](Malware/SOC336-CVE-2025-21298-Zero-Click-RCE/) | Windows OLE Zero-Click RCE Detected (CVE-2025-21298) | Malware | Critical | Zero-click RCE, regsvr32 "Squiblydoo", Sliver C2 |
+| [SOC338](Malware/SOC338-Lumma-Stealer-ClickFix/) | Lumma Stealer – DLL Side-Loading via Click Fix Phishing | Malware | Critical | ClickFix technique, Emmenhtal loader, disguised payload |
+| [SOC335](Malware/SOC335-CVE-2024-49138-Privilege-Escalation/) | CVE-2024-49138 Exploitation Detected | Malware | Medium → Critical | RDP brute force → CLFS privilege escalation to SYSTEM |
+| [SOC250](Data-Leakage/SOC250-APT35-HyperScrape/) | APT35 HyperScrape Data Exfiltration Tool Detected | Data Leakage | Medium → Critical | Nation-state actor (Charming Kitten), confirmed mailbox exfiltration |
 
 *Portfolio in progress — more cases (SQL injection, PowerShell abuse, and further CVE-based exploitation) being added as I work through them.*
 
