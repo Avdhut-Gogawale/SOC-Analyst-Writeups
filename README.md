@@ -28,8 +28,8 @@ I'm Avdhut Gogawale, a recent Electronics and Telecommunication Engineering grad
 
 | Alert ID | Title | Category | Severity | Key Technique |
 |---|---|---|---|---|
-| [SOC176](Brute-Force/SOC176-RDP-Brute-Force/) | RDP Brute Force Detected | Brute Force | Medium | T1110 – Brute Force, weak username matching hostname |
-| [SOC246](Brute-Force/SOC246-Forced-Authentication/) | Forced Authentication Detected | Brute Force | Medium | T1110 – Web login brute force, plaintext HTTP credential exposure |
+| [SOC176](Brute-Force/SOC176-RDP-Brute-Force.md/) | RDP Brute Force Detected | Brute Force | Medium | T1110 – Brute Force, weak username matching hostname |
+| [SOC246](Brute-Force/SOC246-Forced-Authentication.md/) | Forced Authentication Detected | Brute Force | Medium | T1110 – Web login brute force, plaintext HTTP credential exposure |
 | [SOC282](Phishing/SOC282-Phishing-AsyncRAT/) | Phishing Alert – Deceptive Mail Detected | Phishing | Medium → Critical | AsyncRAT delivery, confirmed C2 callback |
 | [SOC275](Phishing/SOC275-Application-Token-Steal-Attempt/) | Application Token Steal Attempt Detected | Phishing | Medium | Discord-themed credential/token phishing |
 | [SOC251](Phishing/SOC251-Quishing-QR-Phishing/) | Quishing Detected (QR Code Phishing) | Phishing | Medium | T1566.002 – QR-code phishing, IPFS-hosted payload |
