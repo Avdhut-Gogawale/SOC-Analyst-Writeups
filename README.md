@@ -35,8 +35,8 @@ I'm Avdhut Gogawale, a recent Electronics and Telecommunication Engineering grad
 | [SOC251](Phishing/SOC251-Quishing-QR-Phishing.md/) | Quishing Detected (QR Code Phishing) | Phishing | Medium | T1566.002 – QR-code phishing, IPFS-hosted payload |
 | [SOC326](Phishing/SOC326-Impersonating-Domain-MX-Change.md/) | Impersonating Domain MX Record Change Detected | Phishing | Medium | Typosquat domain, CTI-driven detection |
 | [SOC336](Malware/SOC336-CVE-2025-21298-Zero-Click-RCE.md/) | Windows OLE Zero-Click RCE Detected (CVE-2025-21298) | Malware | Critical | Zero-click RCE, regsvr32 "Squiblydoo", Sliver C2 |
-| [SOC338](Malware/SOC338-Lumma-Stealer-ClickFix.md/) | Lumma Stealer – DLL Side-Loading via Click Fix Phishing | Data Leakage | Critical | ClickFix technique, Emmenhtal loader, disguised payload |
 | [SOC335](Malware/SOC335-CVE-2024-49138-Privilege-Escalation.md/) | CVE-2024-49138 Exploitation Detected | Malware | Medium → Critical | RDP brute force → CLFS privilege escalation to SYSTEM |
+| [SOC338](Malware/SOC338-Lumma-Stealer-ClickFix.md/) | Lumma Stealer – DLL Side-Loading via Click Fix Phishing | Data Leakage | Critical | ClickFix technique, Emmenhtal loader, disguised payload |
 | [SOC250](Data-Leakage/SOC250-APT35-HyperScrape.md/) | APT35 HyperScrape Data Exfiltration Tool Detected | Data Leakage | Medium → Critical | Nation-state actor (Charming Kitten), confirmed mailbox exfiltration |
 
 *Portfolio in progress — more cases (SQL injection, PowerShell abuse, and further CVE-based exploitation) being added as I work through them.*
