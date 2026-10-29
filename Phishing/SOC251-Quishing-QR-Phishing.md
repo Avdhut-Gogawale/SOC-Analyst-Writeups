@@ -133,12 +133,3 @@ Quishing is specifically designed to be scanned with a **phone camera**, meaning
 
 **Closure Note:**
 > Claire received a phishing email impersonating a mandatory Microsoft MFA update from a lookalike domain (microsecmfa.com). The email contained a QR code (quishing) resolving to a malicious URL on a public IPFS gateway, flagged malicious by multiple vendors and identified via crowdsourced intel as a fake Microsoft login page. SMTP source IP also flagged malicious with a history of abusive behavior. Verdict: True Positive. Because the attack requires a phone scan, interaction cannot be confirmed from corporate network logs — user contact required. Recommend blocklisting sender/domain/SMTP IP, targeted blocking of the specific IPFS content hash, and organization-wide quishing awareness.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- QR-code phishing shifts the point of interaction to an unmonitored device — always state this visibility gap explicitly rather than assuming standard logs would show a click.
-- Don't equate "hosted by a flagged IP" with "the IP itself is malicious infrastructure" — shared/public services (IPFS gateways, cloud storage, CDNs) are frequently abused, and the more durable, actionable indicator is often the specific content identifier or path, not the shared IP.
-- IP/domain blocking has limited value against content-addressed hosting like IPFS, since the same content can be served from many different gateways — call this out and recommend content-hash-based controls where possible.
-- Always name brand-impersonation domains explicitly as a distinct indicator, rather than folding it into a general "phishing email" description.

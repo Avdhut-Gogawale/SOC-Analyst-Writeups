@@ -123,21 +123,3 @@ unrelated to this user.
 > Positive. Recommend HR/Legal-coordinated response, forensic
 > preservation of the USB device, and access reduction for the
 > remainder of her notice period.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Insider threat cases require HR/Legal coordination **before** any
-  employee-facing containment action — unlike malware/external-attacker
-  cases, the SOC cannot act unilaterally here without legal risk.
-- When a DLP control blocks an exfiltration attempt, explicitly note it
-  as a "control success" in the report — and separately flag if the
-  same data left via an uncontrolled channel (e.g., USB), since this
-  identifies a specific control gap for remediation.
-- Chain of custody matters when a case may lead to legal action —
-  "retrieve the device" is not the same as "forensically image the
-  device with documented custody."
-- A vague, unrelated-subject calendar invite sent to colleagues right
-  before a departure is a soft indicator worth flagging for follow-up,
-  even without immediate proof of collusion.

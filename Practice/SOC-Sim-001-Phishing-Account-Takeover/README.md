@@ -130,19 +130,3 @@ account.
 > impossible-travel event confirming active control of the account.
 > Verdict: True Positive. Recommend token revocation, rule removal,
 > legacy auth disablement, and org-wide phishing campaign check.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Always build the full timeline before naming an attack type — a
-  failed/successful login pattern isn't automatically brute-force if a
-  phishing email preceded it.
-- Legacy authentication protocols are a common, often-overlooked MFA
-  bypass vector — always check the auth client/protocol field on a
-  successful login, not just source IP and timestamp.
-- Password resets alone do not kill active sessions or OAuth tokens —
-  token revocation is a separate, frequently-forgotten containment step.
-- A mail rule with a blank or obfuscated name is itself a red flag for
-  BEC persistence and should be searched for proactively during mailbox
-  compromise investigations.

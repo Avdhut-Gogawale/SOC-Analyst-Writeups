@@ -153,22 +153,3 @@ despite the similar filename.
 > indicators. Verdict: True Positive. Recommend process termination
 > before file/registry cleanup, credential reset, and an organization-
 > wide phishing sweep for the same sender pattern.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- File-hash reputation and IP reputation can diverge significantly —
-  attacker C2 infrastructure is often hosted on legitimate, low-reputation
-  shared hosting that hasn't yet been flagged, while the malware sample
-  itself may be very well-documented. Don't let a "clean-looking" IP
-  downgrade an otherwise well-confirmed malware case.
-- Always record the actual detection ratio/confidence score from a
-  lookup tool (e.g., "1/91" or "0% confidence"), not just "flagged" or
-  "clean" — the number itself carries the real signal.
-- When AV quarantine fails due to a locked/in-use file, the process must
-  be killed first before the file and any persistence mechanisms can be
-  reliably removed.
-- A RAT (Remote Access Trojan) compromise should be treated as a
-  potential full interactive compromise, not just a malware cleanup —
-  credential exposure should be assumed until proven otherwise.

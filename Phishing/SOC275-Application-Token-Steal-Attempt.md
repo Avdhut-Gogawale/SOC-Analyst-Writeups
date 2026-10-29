@@ -144,13 +144,3 @@ No evidence was gathered in this investigation confirming whether Gloriana submi
 
 **Closure Note:**
 > Gloriana (172.16.17.172) received a Discord-themed phishing email from noreply@discordglobal.com and clicked a "Reset Password" link, redirecting to homespottersf.com:8081 — flagged malicious on VirusTotal and hosted on a repurposed real-estate domain. The request passed Gloriana's real corporate email as a parameter, suggesting the page targets organizational credentials. Verdict: True Positive (attempted token/credential theft). No confirmation of successful credential submission found in logs reviewed. Recommend password reset, domain/IP blocklisting, and a check for other affected recipients.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Distinguish clearly between an **attempted** credential theft (click + redirect confirmed) and a **successful** one (credentials actually submitted) — don't state the stronger claim unless the logs support it.
-- Always inspect URL parameters in the request itself — an email address, token, or ID passed to a phishing page can reveal the actual target of the attack, not just the disguise being used.
-- Check domain registration details (registrar, creation date, category) — a domain repurposed from a legitimate business via a drop-catch service is a distinct and useful indicator, not just "flagged malicious."
-- Non-standard ports on what should be a simple web page are worth calling out explicitly as a supporting indicator.
-- Always state explicitly whether you checked for other affected recipients — and if you didn't get to it, name it as the next step rather than leaving it implied.

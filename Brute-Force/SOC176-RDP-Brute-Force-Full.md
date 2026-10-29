@@ -112,12 +112,3 @@ Log Management was searched for authentication events between the source IP and 
 
 **Closure Note:**
 > External IP 218.92.0.56 conducted a brute-force attack against RDP on host Matthew (172.16.17.148), cycling through generic usernames (admin, guest, sysadmin) before successfully authenticating as "matthew" — a username matching the hostname itself. Logon Type 10 confirms genuine interactive access was achieved. Source IP confirmed malicious on VirusTotal and AbuseIPDB (410,051 reports). Verdict: True Positive — confirmed successful compromise. Recommend host isolation, credential reset, IP block, and post-compromise investigation.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Always check whether the successful login's username has any relationship to identifiable host information (hostname, domain, etc.) — a match is a specific, nameable weakness, not just "weak credentials."
-- Logon Type is a small field with a large amount of meaning — Type 10 (RemoteInteractive) is what turns "an authentication event happened" into "the attacker had hands-on access to the desktop."
-- A very high historical report count on AbuseIPDB (in the hundreds of thousands) is worth calling out explicitly — it distinguishes "a malicious IP" from "a persistent, industrial-scale scanning/attack source."
-- The specific usernames attempted during failed logons can reveal whether an attack is generic/automated (common defaults) or targeted (organization-specific guesses) — always note the pattern, not just the count.

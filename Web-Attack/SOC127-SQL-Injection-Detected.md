@@ -198,14 +198,3 @@ The alert is supported by repeated malicious HTTP requests containing recognizab
 
 **Closure Note:**
 > Investigation confirmed automated SQL injection activity from `118.194.247.28` using `sqlmap/1.7.2#stable`. The attacker tested boolean-, UNION-, error-, and time-based SQL injection techniques, attempted database schema enumeration through `information_schema.tables`, and sent additional XSS/command-execution probes. The activity is a True Positive. However, the available web logs do not prove successful database extraction, OS command execution, or data exfiltration. Recommend blocking the source as appropriate, reviewing the affected parameters for SQLi, implementing parameterized queries, and correlating application/database telemetry for evidence of successful exploitation.
-
----
-
-## Key Takeaways
-
-- A `sqlmap` User-Agent combined with SQL syntax in request parameters is strong evidence of automated SQL injection activity.
-- `information_schema.tables` usually indicates database-schema discovery/enumeration rather than direct password theft.
-- `EXTRACTVALUE()` can indicate error-based SQLi, while `WAITFOR DELAY` is commonly used for time-based/blind SQLi testing.
-- `HTTP 200` means the web server returned a successful HTTP response; it does **not** prove that the SQL injection itself succeeded.
-- Distinguish **confirmed attack activity** from **confirmed compromise**. In SOC127, the former is supported; the latter is not established by the supplied logs.
-- Do not attribute a normal browser request to the attacker without session/source evidence that connects it to the malicious activity.

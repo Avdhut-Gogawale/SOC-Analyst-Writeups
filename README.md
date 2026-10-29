@@ -55,7 +55,6 @@ Every case in this repository follows the same structure:
 6. **Verdict** — True/False Positive determination with explicit reasoning, distinguishing *confirmed* findings from *unconfirmed/open* items
 7. **Containment & Recommendations** — prioritized response actions
 8. **Closure Note** — concise summary suitable for ticket closure
-9. **Key Takeaways** — lessons I applied to subsequent investigations
 
 ## Tools Used
 

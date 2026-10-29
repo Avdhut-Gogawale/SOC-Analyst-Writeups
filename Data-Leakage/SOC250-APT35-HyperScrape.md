@@ -159,13 +159,3 @@ The exfiltrated mailbox data was transmitted outbound from the EmailDownloader.e
 
 **Closure Note:**
 > Host Arthur (172.16.17.72) was accessed via RDP from 173.209.51.54 using valid credentials (no failed logons observed), followed by execution of EmailDownloader.exe — confirmed via VirusTotal (50/69) as APT35's HyperScrape tool. Exchange logs confirm a succeeded mailbox download via OWA, with outbound transfer to confirmed-malicious IP 136.243.108.14 (Hetzner). All three IOCs (RDP source IP, file hash, C2 IP) independently confirmed malicious. Verdict: True Positive — confirmed nation-state (APT35) mailbox exfiltration. Severity escalated to Critical. Recommend host isolation, credential reset, MFA enforcement, IOC blocklisting, and full IR escalation including cloud configuration review (outside this platform's log visibility) and lateral movement/persistence investigation.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- The **absence** of failed login attempts before a successful logon is itself a finding — it points toward pre-compromised credentials rather than brute force, and should reframe the investigation toward "where did credential theft happen" rather than just "is this host compromised."
-- Enrich every IP in the chain, not just the most obviously malicious one — the initial-access IP here carried its own independent confirmation (phishing tag) that reinforced the credential-theft theory.
-- When a tool or platform can't answer a question within its own scope (e.g., cloud configuration data not available in LetsDefend), say so explicitly and route it to whoever has the right access, rather than skipping the question or guessing. That's a stronger signal of judgment than pretending to verify something you couldn't.
-- Exchange/mailbox audit log fields like `Operation` and `OperationResult` are what separate "attacker had access" from "attacker actually took data" — read them precisely rather than summarizing loosely.
-- A very short dwell time between access and exfiltration (minutes, not hours) usually indicates automated/scripted tooling — note it, since it affects how much detection window realistically existed.

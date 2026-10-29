@@ -191,13 +191,3 @@ All three infrastructure indicators (phishing domain, payload delivery domain, S
 
 **Closure Note:**
 > Dylan received a phishing email impersonating a Windows 11 upgrade, from a malicious sender (132.232.40.201, confirmed on VT/AbuseIPDB). He clicked through to windows-update.site (confirmed malicious), triggering a ClickFix-style infection: obfuscated PowerShell executed mshta.exe, which fetched a payload disguised as maloy.mp4 from overcoatpassably.shop (confirmed malicious). The file is confirmed by VirusTotal to be text/script content, not video, and is attributed to the Emmenhtal loader family associated with Lumma Stealer distribution (21/59 vendors, hash confirmed malicious). Verdict: True Positive — confirmed Critical infostealer infection. Host and all locally stored credentials must be treated as compromised. Recommend immediate isolation, full credential reset, IOC blocklisting, and IR escalation.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- ClickFix/fake-CAPTCHA phishing doesn't rely on an exploit — it relies on the user manually executing attacker-supplied commands via legitimate tools (mshta.exe, PowerShell). Recognizing this pattern (a "verification" page followed by a copy/paste-and-run instruction) is itself a strong detection signal.
-- File extensions in a URL are not evidence of file type — always check the actual content type (via VirusTotal or direct inspection) rather than trusting a `.mp4`, `.pdf`, or similar extension at face value, especially when the fetching process is a script interpreter or LOLBin rather than a media player/browser.
-- String-obfuscation tricks like splitting a command with junk characters and a `-replace` operator are simple but effective against naive signature matching — always reconstruct and state the de-obfuscated command explicitly in the report.
-- A cosmetic comment appended to a malicious command (e.g., a fake CAPTCHA verification string) exists purely for the social-engineering pretext and should be identified as such, not mistaken for a functional part of the payload.
-- When a known malware family delivery chain is suspected, briefly research and include background on that family/technique in the report — it demonstrates broader threat understanding beyond just this single incident's IOCs.

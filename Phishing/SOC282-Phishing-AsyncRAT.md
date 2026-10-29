@@ -182,13 +182,3 @@ Log Management was searched for destination IP `37.120.233.226` across all hosts
 
 **Closure Note:**
 > Phishing email from free@coffeeshooop.com delivered malicious link to Felix (172.16.20.151). User clicked, downloading Coffee.exe via files-ld.s3...amazonaws.com (linked to SILENTBUILDER/Conti). Sandbox (ANY.RUN) identified payload as AsyncRAT. Coffee.exe executed and connected to C2 IP 37.120.233.226:3451 — one attempt Permitted, confirming successful C2 access. No other hosts found contacting this IP. Verdict: True Positive. Recommend isolating host, blocking C2 IP and phishing domain, and hash-based hunting across environment.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- A single "Allowed" log entry among several "Denied" entries for the same destination is often the most important line in the whole case — don't skim past it.
-- Always separate threat intel findings by **which part of the delivery chain** they describe (redirector vs. hosting vs. payload) rather than merging them into one sentence.
-- Sandbox verdicts (ANY.RUN, etc.) that name a specific malware family should drive severity and response — "malicious file" and "AsyncRAT" are not the same level of urgency.
-- Hashes aren't optional documentation — they're the actual hunting artifact for checking the rest of the environment.
-- Always explicitly state the scope-check result ("only 1 host affected, confirmed via search") — absence of evidence is only useful if you show you looked.

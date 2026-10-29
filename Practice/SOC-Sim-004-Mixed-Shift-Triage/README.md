@@ -121,18 +121,3 @@ nearby event.** Status changed to Open/Escalated.
 > corrected and escalated, since a high-confidence threat intel match
 > requires verified causal evidence to close, not proximity to unrelated
 > activity.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Every alert on the board needs to be explicitly addressed — as
-  confirmed, false positive with evidence, or open — silence on an
-  alert reads the same as missing it.
-- The bar for closing a high-confidence threat intel match (named
-  malware family, JA3 fingerprint, known-bad hash) is much higher than
-  "there's a plausible nearby explanation." Coincidental timing is not
-  the same as a verified causal explanation.
-- Not all "explained" alerts carry equal evidentiary weight — a
-  pre-approved, signed-off change ticket is much stronger evidence than
-  an after-the-fact assumption about unrelated user activity.

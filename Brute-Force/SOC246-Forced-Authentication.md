@@ -133,13 +133,3 @@ The destination hostname (`WebServer_Test`) and subdomain (`test-frontend.letsde
 
 **Closure Note:**
 > External IP 120.48.36.175 conducted a brute-force attack against the /accounts/login endpoint of WebServer_Test (104.26.15.61), attempting 12 failed logins with generic credentials before successfully authenticating to the admin account. Source IP confirmed malicious on VirusTotal and AbuseIPDB with documented SSH/Telnet brute-force history. Login endpoint uses unencrypted HTTP. Verdict: True Positive — confirmed account compromise. Recommend credential reset, session invalidation, IP block, TLS enforcement, lockout policy, and post-compromise investigation.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- State exactly what your screenshots represent versus the full evidence set — e.g., "12 attempts observed, 3 representative examples shown" — rather than implying every attempt pictured is the complete count.
-- Don't assume the successful login used one of the credential combinations you happened to capture — check explicitly, and flag it as unconfirmed if the log doesn't show it.
-- An unusual username (like `root` on a web app) is itself a clue about attacker tooling and intent — it can indicate generic/automated scanning rather than a targeted attack, which is useful context for prioritization.
-- Cross-check the destination port in every log — plaintext HTTP on a login endpoint is a finding in its own right, independent of whatever attack triggered the alert.
-- Note environment context (test vs. production hostnames) — it changes the risk conversation around why the exposure exists in the first place.

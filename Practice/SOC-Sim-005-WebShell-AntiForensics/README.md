@@ -140,22 +140,3 @@ scheduled A/B test — ruled out as unrelated.
 > True Positive. A related account-lockout alert, explained only by a
 > self-filed after-the-fact ticket, was kept open rather than closed at
 > face value.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Evidence quality matters as much as evidence existence — a
-  self-reported explanation filed *after* an incident, by the same
-  account implicated in it, carries less weight than a pre-approved
-  change ticket and should be treated with more scrutiny before
-  closure.
-- When an attacker is observed cleaning up after themselves, assume
-  further evidence is fragile — forensic imaging should happen *before*
-  remediation, not after.
-- Threat intel timing matters in reporting — note explicitly when an IOC
-  becomes "known" relative to when the attack occurred, since this
-  distinguishes a detection gap from a genuine missed-intel failure.
-- Small, repeating outbound transfer sizes should not be assumed to be
-  "just beaconing" — low-and-slow exfiltration can look identical
-  without payload inspection.

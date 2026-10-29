@@ -129,20 +129,3 @@ product page. Ruled out as unrelated.
 > account for persistence. Verdict: True Positive. Recommend immediate
 > account removal, WAF reconfiguration, and password resets for exposed
 > accounts.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Whenever an alert shows "new account created" or "permissions
-  changed," account removal must be an explicit containment step — one
-  of the most commonly missed steps by junior analysts.
-- Always ask *why* a control didn't stop an attack — a WAF rule that
-  fires but doesn't block is a distinct, reportable finding from "no
-  rule existed at all."
-- A known offensive-tooling default port (e.g., 4444 for Meterpreter)
-  is a strong standalone IOC — always cross-reference unusual ports
-  against known tooling defaults.
-- Not every request from an unfamiliar IP is malicious — validate
-  response codes and payload sizes before including something in your
-  IOC list.

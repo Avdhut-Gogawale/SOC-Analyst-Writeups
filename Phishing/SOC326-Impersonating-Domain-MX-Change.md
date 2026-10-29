@@ -137,14 +137,3 @@ The ~20-hour gap between the CTI alert (MX record configured on the impersonatin
 
 **Closure Note:**
 > CTI feed detected MX record configuration on letsdefwnd[.]io, a typosquat domain impersonating letsdefend.io (similarity score 55). ~20 hours later, a phishing email from this domain was sent to Mateo, who clicked the link and reached the attacker-controlled site (confirmed via proxy logs); credential submission is not confirmed. Hosting IP 45.33.23.183 independently flagged on VirusTotal and AbuseIPDB. Domain was registered ~1 year prior to activation, consistent with deliberate aging. Verdict: True Positive. Recommend domain/IP blocklisting, domain takedown, credential reset as a precaution, check for other recipients, and formalizing proactive blocking for future CTI domain-impersonation alerts.
-
----
-
-## Key Takeaways (Lessons for Future Investigations)
-
-- Be precise about *what* was actually changed and by whom — "an impersonating domain's MX record changed" is a very different (and less severe) finding than "our organization's MX record changed." Conflating the two misrepresents the incident's actual scope.
-- A user clicking a phishing link and a user having credentials stolen are two distinct, separately-provable facts — don't state the stronger claim without evidence (a POST request, a credential log entry) to support it.
-- A 0-detection result on a URL scanner is not the same as "confirmed safe," especially for very recently activated infrastructure — explain why in the report rather than leaving it unaddressed.
-- Domain creation/registration dates are worth checking every time — a long dormancy period before activation is a distinct tradecraft indicator worth calling out.
-- When two threat-intel sources report different-sounding hosting providers for the same IP, check whether it's a naming/rebrand discrepancy before treating it as conflicting data.
-- CTI/leading-indicator alerts (like domain impersonation detections) are most valuable when acted on immediately — note any gap between detection and exploitation as a process-improvement opportunity, not just a timeline curiosity.
