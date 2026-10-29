@@ -51,7 +51,7 @@ an overdue invoice inside a `.zip` attachment.
 **VirusTotal — File Hash**
 The dropped file's SHA256 hash was submitted to VirusTotal:
 
-![VirusTotal Hash Detection](screenshots/01-virustotal-hash.png)
+![VirusTotal Hash Detection](../../Screenshots/SOC-Sim-006/01-virustotal-hash.png)
 *VirusTotal — 54/66 vendors flagged the file as malicious. Popular
 threat label: `trojan.asyncrat/msil`. Family labels: asyncrat, msil,
 marte.*
@@ -59,12 +59,12 @@ marte.*
 **VirusTotal — C2 IP**
 The C2 IP address was also checked on VirusTotal:
 
-![VirusTotal IP Detection](screenshots/02-virustotal-ip.png)
+![VirusTotal IP Detection](../../Screenshots/SOC-Sim-006/02-virustotal-ip.png)
 *VirusTotal — only 1/91 vendors flagged 193.32.232.64 as malicious.*
 
 **AbuseIPDB — C2 IP**
 
-![AbuseIPDB IP Report](screenshots/03-abuseipdb-ip.png)
+![AbuseIPDB IP Report](../../Screenshots/SOC-Sim-006/03-abuseipdb-ip.png)
 *AbuseIPDB — 193.32.232.64 reported only 2 times, 0% abuse confidence.
 ISP: EZIT Datacenter Services, hosted in Slovakia.*
 

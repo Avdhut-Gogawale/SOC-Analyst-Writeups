@@ -77,7 +77,7 @@ SOC-Analyst-Writeups/
 └── Practice-Labs/
 ```
 
-Each investigation folder contains a full markdown writeup and a `screenshots/` subfolder with the supporting evidence referenced inline in the report.
+Each category folder contains the full markdown writeups. All supporting evidence screenshots live in the common top-level `Screenshots/` folder, with one subfolder per alert (e.g. `Screenshots/soc176/`), referenced inline in each report.
 
 ---
 

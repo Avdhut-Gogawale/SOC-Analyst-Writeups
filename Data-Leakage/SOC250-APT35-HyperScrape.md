@@ -24,7 +24,7 @@ A confirmed instance of **HyperScrape**, a custom mailbox-exfiltration tool attr
 | C2 / Exfil Destination IP | 136.243.108.14 |
 | Device Action | Allowed |
 
-![Alert Detail](soc250-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc250/01-alert-detail.png)
 *SIEM alert detail — SOC250, EventID 212, "APT35 HyperScrape Data Exfiltration Tool Detected." Per the alert's own threat context, HyperScrape was first observed in August 2022, used by APT35 to extract victim mailbox contents.*
 
 ---
@@ -50,7 +50,7 @@ A confirmed instance of **HyperScrape**, a custom mailbox-exfiltration tool attr
 ## 4. Investigation Steps
 
 ### 4.1 Initial Access — RDP Logon
-![RDP Logon](soc250-screenshots/02-rdp-logon.png)
+![RDP Logon](../Screenshots/soc250/02-rdp-logon.png)
 *11:17 AM — EventID 4624 (successful logon), Logon Type 10 (RemoteInteractive/RDP), Username: Arthur, Source IP: 173.209.51.54.*
 
 **Finding — no brute-force precursor:** Unlike a typical brute-force compromise, no failed logon attempts (EventID 4625) were found preceding this successful RDP session. This indicates the attacker very likely already possessed **valid credentials** for the Arthur account, rather than guessing them against this host. Given APT35's documented primary tactic of spear-phishing for credential harvesting, this strongly suggests the credential theft occurred in a **separate, prior compromise** (e.g., a phishing campaign not captured in this alert's scope) — meaning this incident may be the second stage of a larger intrusion, not an isolated event.
@@ -61,13 +61,13 @@ Per the alert detail, `EmailDownloader.exe` was placed in `C:\Users\LetsDefend\D
 ### 4.3 Mailbox Exfiltration — Exchange Audit Logs
 Three Exchange log entries together establish that mailbox content was actually downloaded, not merely accessed:
 
-![Exchange Log - Mailbox](soc250-screenshots/03-exchange-log-mailbox.png)
+![Exchange Log - Mailbox](../Screenshots/soc250/03-exchange-log-mailbox.png)
 *Mailbox GUID, Owner (EC2AMAZ-ILGVOIN\Arthur), LastAccessed: 2023-12-27T11:21:48.*
 
-![Exchange Log - Download](soc250-screenshots/04-exchange-log-download.png)
+![Exchange Log - Download](../Screenshots/soc250/04-exchange-log-download.png)
 *Operation: Download, OperationResult: Succeeded, LogonType: User, FolderPathName: \Mails\Inbox.*
 
-![Exchange Log - OWA Session](soc250-screenshots/05-exchange-log-owa.png)
+![Exchange Log - OWA Session](../Screenshots/soc250/05-exchange-log-owa.png)
 *ClientInfoString: Client:OWA;Action:ViaProxy, ClientIPAddress: 172.16.17.72, MailboxOwnerUPN: arthur@letsdefend.io, Subject: "Notification of Multiple Mail Download."*
 
 **Confirmed finding:** The attacker accessed Arthur's mailbox via an **OWA (Outlook Web App) session, proxied**, and the `Operation: Download` / `OperationResult: Succeeded` fields confirm inbox content was **actually exfiltrated**, not merely queried. The email subject "Notification of Multiple Mail Download" is an automated system-generated alert, triggered by the mail platform in response to the tool's bulk-download behavior — not an artifact created by the attacker.
@@ -75,7 +75,7 @@ Three Exchange log entries together establish that mailbox content was actually 
 **Cloud environment note:** The mailbox owner field (`EC2AMAZ-ILGVOIN\Arthur`) indicates the compromised host is an **AWS EC2 Windows instance** (EC2AMAZ is AWS's default auto-generated hostname prefix). LetsDefend's Log Management does not provide access to AWS CloudTrail or Security Group configuration data, so it could not be determined within this platform whether RDP (port 3389) was directly exposed to the internet on this instance. **This has been flagged for the IR team to confirm with appropriate cloud console access**, as it would materially affect the initial-access theory in Section 4.1.
 
 ### 4.4 Outbound Connection / C2
-![Firewall - C2 Outbound](soc250-screenshots/06-firewall-c2-outbound.png)
+![Firewall - C2 Outbound](../Screenshots/soc250/06-firewall-c2-outbound.png)
 *172.16.17.72 → 136.243.108.14:80/TCP, Source Process: EmailDownloader.exe, Firewall Action: SUCCESS.*
 
 The exfiltrated mailbox data was transmitted outbound from the EmailDownloader.exe process to this external IP, coinciding with the alert trigger time.
@@ -83,15 +83,15 @@ The exfiltrated mailbox data was transmitted outbound from the EmailDownloader.e
 ### 4.5 Threat Intelligence Enrichment
 
 **File hash:**
-![VirusTotal File Hash](soc250-screenshots/07-vt-file-hash.png)
+![VirusTotal File Hash](../Screenshots/soc250/07-vt-file-hash.png)
 *VirusTotal — EmailDownloader.exe flagged malicious by 50/69 vendors. Popular threat label: trojan.msil/hyperscrptl. Threat categories: trojan, ransomware, spyware. Family labels include "hyperscrptl" and "bladabindi," and multiple vendors explicitly tag it Trojan[APT]/Win32.APT35.*
 
 **C2 / exfil destination IP:**
-![VirusTotal C2 IP](soc250-screenshots/08-vt-c2-ip.png)
+![VirusTotal C2 IP](../Screenshots/soc250/08-vt-c2-ip.png)
 *VirusTotal — 136.243.108.14 (AS24940, Hetzner Online GmbH, Germany) flagged malicious by 14/91 vendors.* Hetzner is a legitimate, low-cost VPS provider frequently abused for disposable attacker infrastructure due to minimal vetting at signup.
 
 **RDP source IP:**
-![VirusTotal RDP Source IP](soc250-screenshots/09-vt-rdp-source-ip.png)
+![VirusTotal RDP Source IP](../Screenshots/soc250/09-vt-rdp-source-ip.png)
 *VirusTotal — 173.209.51.54 (AS36666, GloboTech Communications, Canada) flagged malicious by 3/91 vendors, including a phishing tag from SOCRadar.* The phishing classification on the initial-access IP is consistent with the credential-theft-via-phishing theory in Section 4.1.
 
 **All three IOCs in this case — initial-access IP, malware hash, and exfiltration IP — are independently confirmed malicious across threat intelligence platforms.**

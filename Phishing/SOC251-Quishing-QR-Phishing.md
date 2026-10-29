@@ -23,7 +23,7 @@ User **Claire (Claire@letsdefend.io)** received an email impersonating a Microso
 | Decoded QR URL | `https://ipfs.io/ipfs/Qmbr8wmr41C35c3K2GfiP2F8YGzLhYpKpb4K66KU6mLmL4` |
 | Hosting IP (ipfs.io gateway) | 209.94.90.1 |
 
-![Alert Detail](soc251-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc251/01-alert-detail.png)
 *SIEM alert detail — SOC251, EventID 214, "Quishing Detected (QR Code Phishing)."*
 
 ---
@@ -42,7 +42,7 @@ User **Claire (Claire@letsdefend.io)** received an email impersonating a Microso
 ### 3.1 Email Review
 The email impersonated a mandatory Microsoft MFA enrollment notice, using urgency and a compliance threat ("Failure to authenticate... will lead to loss of email privileges") to pressure the user into scanning the embedded QR code with a phone camera, rather than clicking a traditional link.
 
-![Phishing Email with QR](soc251-screenshots/02-phishing-email-qr.png)
+![Phishing Email with QR](../Screenshots/soc251/02-phishing-email-qr.png)
 *"New Year's Mandatory Security Update" phishing email — QR code embedded in place of a clickable link.*
 
 **Sender domain analysis:** `microsecmfa.com` is a lookalike/brand-impersonation domain, clearly engineered to resemble "Microsoft Security MFA" and lend false legitimacy to the request.
@@ -55,22 +55,22 @@ https://ipfs.io/ipfs/Qmbr8wmr41C35c3K2GfiP2F8YGzLhYpKpb4K66KU6mLmL4
 This is a public **IPFS (InterPlanetary File System)** gateway URL. The path segment following `/ipfs/` (`Qmbr8wmr41C35c3K2GfiP2F8YGzLhYpKpb4K66KU6mLmL4`) is a **content identifier (CID)** — a hash uniquely identifying the hosted content, regardless of which public gateway serves it.
 
 ### 3.3 Threat Intelligence — Destination URL
-![VirusTotal IPFS URL](soc251-screenshots/03-vt-ipfs-url.png)
+![VirusTotal IPFS URL](../Screenshots/soc251/03-vt-ipfs-url.png)
 *VirusTotal — the decoded IPFS URL flagged by 11/92 vendors as malicious/phishing.*
 
 ### 3.4 Threat Intelligence — Hosting Infrastructure
 The resolved hosting IP for the ipfs.io gateway was checked separately:
 
-![VirusTotal Hosting IP](soc251-screenshots/05-vt-hosting-ip.png)
+![VirusTotal Hosting IP](../Screenshots/soc251/05-vt-hosting-ip.png)
 *VirusTotal — 209.94.90.1 (AS40680, Protocol Labs, US) flagged 8/91 as malicious/phishing. Crowdsourced context: "Phishing - Sharepoint with URL to fake Microsoft login page" (ArcSight Threat Intelligence).*
 
-![AbuseIPDB Hosting IP](soc251-screenshots/06-abuseipdb-hosting-ip.png)
+![AbuseIPDB Hosting IP](../Screenshots/soc251/06-abuseipdb-hosting-ip.png)
 *AbuseIPDB — 209.94.90.1 reported only once, 0% abuse confidence. ISP: Protocol Labs, associated with domain ipfs.io.*
 
 **Important nuance:** `209.94.90.1` belongs to **Protocol Labs**, the organization operating the public **ipfs.io gateway** — legitimate, widely-used infrastructure. The IP itself is not inherently malicious; it is **shared public infrastructure being abused to serve attacker-controlled content**. The low AbuseIPDB report count and 0% confidence reflect this: the abuse signal sits with the specific content (the CID) and the crowdsourced phishing tag, not with the IP as a whole. This is a meaningful distinction for containment — see Section 6.
 
 ### 3.5 Threat Intelligence — SMTP Source
-![VirusTotal SMTP IP](soc251-screenshots/04-vt-smtp-ip.png)
+![VirusTotal SMTP IP](../Screenshots/soc251/04-vt-smtp-ip.png)
 *VirusTotal — 158.69.201.47 (AS16276, OVH SAS, Canada) flagged 6/91 as malicious/phishing. CrowdSec context: behaviors include HTTP Bruteforce, HTTP Crawl, HTTP DoS, and others.*
 
 The sending infrastructure has an established history of abusive behavior beyond this single phishing campaign, per CrowdSec CTI.

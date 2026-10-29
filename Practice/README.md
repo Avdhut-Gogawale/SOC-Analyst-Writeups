@@ -32,7 +32,7 @@ are not publicly known threat indicators.
 
 **SOC-Sim-006:** Real IOCs verified on
 VirusTotal and AbuseIPDB. Screenshots of
-enrichment results in screenshots/ folder.
+enrichment results in the top-level `Screenshots/` folder (`Screenshots/SOC-Sim-006/`).
 
 ---
 

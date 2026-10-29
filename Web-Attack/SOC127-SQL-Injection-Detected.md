@@ -35,49 +35,49 @@ Most displayed requests returned **HTTP 200** with a response size of **865 byte
 
 ### 3.1 Automated SQLMap Activity
 
-![SQLMap Raw Log 01](soc127-screenshots/01-raw-log.png)
+![SQLMap Raw Log 01](../Screenshots/soc127/01-raw-log.png)
 
 The request User-Agent identifies `sqlmap/1.7.2#stable`, strongly indicating automated SQL injection testing rather than ordinary browser activity.
 
-![SQLMap Raw Log 02](soc127-screenshots/02-raw-log.png)
+![SQLMap Raw Log 02](../Screenshots/soc127/02-raw-log.png)
 
 Repeated encoded payloads show the same source continuing to test the vulnerable-looking web parameter.
 
 ### 3.2 Error-Based SQL Injection Probe
 
-![EXTRACTVALUE Probe](soc127-screenshots/03-raw-log.png)
+![EXTRACTVALUE Probe](../Screenshots/soc127/03-raw-log.png)
 
 A request contains `EXTRACTVALUE(...)`. This function is commonly abused in error-based SQL injection to force a database error that may disclose attacker-selected database information in the error response.
 
 ### 3.3 Conditional / Boolean SQL Injection Testing
 
-![Conditional SQLi](soc127-screenshots/04-raw-log.png)
+![Conditional SQLi](../Screenshots/soc127/04-raw-log.png)
 
 Payloads containing `SELECT CASE WHEN ... THEN ... ELSE ... END` test whether application responses change according to true/false database conditions.
 
-![Boolean Test](soc127-screenshots/05-raw-log.png)
+![Boolean Test](../Screenshots/soc127/05-raw-log.png)
 
 The `AND <value>=<value>` style probe is consistent with boolean-based SQL injection testing. An attacker/tool compares true and false conditions to determine whether the parameter influences a backend SQL query.
 
-![Boolean Test Variant](soc127-screenshots/06-raw-log.png)
+![Boolean Test Variant](../Screenshots/soc127/06-raw-log.png)
 
 A second boolean-condition request provides another response for comparison during automated injection detection.
 
 ### 3.4 Additional SQLMap Probe
 
-![Additional SQLMap Probe](soc127-screenshots/07-raw-log.png)
+![Additional SQLMap Probe](../Screenshots/soc127/07-raw-log.png)
 
 Another encoded request from the same source continues automated DBMS/injection testing.
 
 ### 3.5 Generic SQLMap Request
 
-![SQLMap Request](soc127-screenshots/08-raw-log.png)
+![SQLMap Request](../Screenshots/soc127/08-raw-log.png)
 
 The User-Agent remains `sqlmap/1.7.2#stable`, correlating the requests as part of the same automated SQL injection activity.
 
 ### 3.6 Multi-Technique Exploitation Probe
 
-![Combined SQLi Payload](soc127-screenshots/09-raw-log.png)
+![Combined SQLi Payload](../Screenshots/soc127/09-raw-log.png)
 
 One of the strongest requests contains a combined payload conceptually similar to:
 
@@ -102,25 +102,25 @@ The mixture of DBMS- and OS-specific syntax is consistent with broad automated p
 
 ### 3.7 Browser Traffic Observed
 
-![Browser Request](soc127-screenshots/10-raw-log.png)
+![Browser Request](../Screenshots/soc127/10-raw-log.png)
 
 A request uses a normal Chrome User-Agent (`Mozilla/5.0 ... Chrome/122...`). This shows browser traffic to the application. Without additional session, authentication, or source-correlation evidence, it should not be stated as fact that this browser request was the attacker's reconnaissance.
 
 ### 3.8 Time-Based SQL Injection Testing
 
-![WAITFOR DELAY Probe 1](soc127-screenshots/11-raw-log.png)
+![WAITFOR DELAY Probe 1](../Screenshots/soc127/11-raw-log.png)
 
-![WAITFOR DELAY Probe 2](soc127-screenshots/12-raw-log.png)
+![WAITFOR DELAY Probe 2](../Screenshots/soc127/12-raw-log.png)
 
 Payloads containing `WAITFOR DELAY` are characteristic of Microsoft SQL Server time-based/blind SQL injection testing. If execution causes a predictable response delay, the attacker can infer that injected SQL is being evaluated even when query output is not directly visible.
 
 ### 3.9 Additional Conditional / Fingerprinting Probes
 
-![Conditional Probe](soc127-screenshots/13-raw-log.png)
+![Conditional Probe](../Screenshots/soc127/13-raw-log.png)
 
-![DBMS Fingerprinting Probe](soc127-screenshots/14-raw-log.png)
+![DBMS Fingerprinting Probe](../Screenshots/soc127/14-raw-log.png)
 
-![DBMS Fingerprinting Probe 2](soc127-screenshots/15-raw-log.png)
+![DBMS Fingerprinting Probe 2](../Screenshots/soc127/15-raw-log.png)
 
 The remaining requests contain generated SQL expressions and DBMS-specific functions. These are consistent with `sqlmap` fingerprinting the backend database and testing which injection technique is usable.
 

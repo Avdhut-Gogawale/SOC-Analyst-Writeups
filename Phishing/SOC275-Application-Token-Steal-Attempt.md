@@ -27,7 +27,7 @@ User **Gloriana (gloriana@letsdefend.io)** received a phishing email impersonati
 | Hosting IP | 20.42.73.27 |
 | Response Status | 302 (redirect) |
 
-![Alert Detail](soc275-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc275/01-alert-detail.png)
 *SIEM alert detail — SOC275, EventID 250, "Application Token Steal Attempt Detected."*
 
 ---
@@ -49,12 +49,12 @@ User **Gloriana (gloriana@letsdefend.io)** received a phishing email impersonati
 ### 3.1 Email / Exchange Log Review
 The email impersonated Discord, using an urgency-based lure ("Your password has expired") and a "Reset Password" call-to-action button — a standard credential-phishing template.
 
-![Phishing Email](soc275-screenshots/02-phishing-email.png)
+![Phishing Email](../Screenshots/soc275/02-phishing-email.png)
 *"Password Expired - Reset Your Password" phishing email impersonating Discord.*
 
 Exchange raw log confirms sender infrastructure:
 
-![Exchange Log](soc275-screenshots/03-exchange-log.png)
+![Exchange Log](../Screenshots/soc275/03-exchange-log.png)
 *Raw Exchange log — sender 185.210.95.57 (noreply@discordglobal.com) → gloriana@letsdefend.io, port 25.*
 
 - **Sender domain:** `discordglobal.com` — not Discord's legitimate domain (discord.com); a lookalike brand-impersonation domain.
@@ -63,7 +63,7 @@ Exchange raw log confirms sender infrastructure:
 ### 3.2 Proxy Log — Confirming the Click and Redirect
 The proxy log confirms Gloriana's browser actually followed the link:
 
-![Proxy Log](soc275-screenshots/04-proxy-log.png)
+![Proxy Log](../Screenshots/soc275/04-proxy-log.png)
 *Proxy log — 172.16.17.172 (Gloriana) requested `/reset-password?email=gloriana@letsdefend.io`, X-Forwarded-Host: homespottersf.com, port 8081, Status Code: 302.*
 
 **Key finding:** The request passes `email=gloriana@letsdefend.io` — her **actual corporate email address** — as a URL parameter to the phishing page, not a Discord account identifier. This indicates the page is very likely designed to harvest her **organizational credentials** under a Discord-branded pretext, not just a Discord password. This raises the severity of the finding beyond a simple third-party account phish.
@@ -73,14 +73,14 @@ The destination also runs on **port 8081**, a non-standard port for a password-r
 ### 3.3 Threat Intelligence — Domain Reputation
 The redirect domain was checked on VirusTotal:
 
-![VirusTotal Domain Report](soc275-screenshots/06-vt-domain-report.png)
+![VirusTotal Domain Report](../Screenshots/soc275/06-vt-domain-report.png)
 *VirusTotal — `homespottersf.com` flagged 1/91 as malicious. Registrar: DropCatch.com 957 LLC. Creation date: 2 years ago. Categorized as "real estate."*
 
 **Finding:** This domain was originally registered for a legitimate real-estate business, but is now serving a Discord-branded credential harvesting page. Combined with the registrar being **DropCatch** (a service specifically used to acquire expired/dropped domains), this matches a known attacker pattern: repurposing aged domains with pre-existing reputation and category history to evade fresh-domain detection and reduce block-list hits.
 
 The full URL was also checked separately:
 
-![VirusTotal URL Report](soc275-screenshots/05-vt-url-report.png)
+![VirusTotal URL Report](../Screenshots/soc275/05-vt-url-report.png)
 *VirusTotal — `http://homespottersf.com:8081/reset-password` flagged 1/92 as malicious, tagged `ns-port` (non-standard port).*
 
 ### 3.4 Scope Check

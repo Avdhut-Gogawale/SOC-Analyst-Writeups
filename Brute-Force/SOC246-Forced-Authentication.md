@@ -23,7 +23,7 @@ An external IP address conducted a brute-force credential-guessing attack agains
 | Device Action | Permitted |
 | Alert Trigger Reason | Multiple POST requests seen from the same IP to the fixed URI "/accounts/login" |
 
-![Alert Detail](soc246-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc246/01-alert-detail.png)
 *SIEM alert detail — SOC246, EventID 208, "Forced Authentication Detected."*
 
 ---
@@ -47,28 +47,28 @@ An external IP address conducted a brute-force credential-guessing attack agains
 ### 3.1 Log Analysis — Failed Login Attempts
 Log Management was searched for all POST requests from source IP `120.48.36.175` to `/accounts/login`. A total of **12 failed login attempts** were observed between 02:05 PM and 02:15 PM, using multiple username/password combinations. Three representative examples are documented below.
 
-![Failed Login - root](soc246-screenshots/02-failed-login-root.png)
+![Failed Login - root](../Screenshots/soc246/02-failed-login-root.png)
 *02:05 PM — Username=root, Password=123456. Permitted (reached the application; authentication failed).*
 
-![Failed Login - admin attempt 1](soc246-screenshots/03-failed-login-admin1.png)
+![Failed Login - admin attempt 1](../Screenshots/soc246/03-failed-login-admin1.png)
 *02:06 PM — Username=admin, Password=12345.*
 
-![Failed Login - admin attempt 2](soc246-screenshots/04-failed-login-admin2.png)
+![Failed Login - admin attempt 2](../Screenshots/soc246/04-failed-login-admin2.png)
 *02:14 PM — Username=admin, Password=abcd12345. Final failed attempt before the successful login one minute later.*
 
 **Finding — attacker tooling:** The username `root` is not a typical web-application account name; it is the default superuser account on Linux/Unix systems, commonly targeted in SSH/Telnet brute-force tooling. Its use here, combined with the generic password list (`123456`, `12345`, `abcd12345`), indicates this is very likely an **automated scanning tool using a generic credential wordlist**, rather than a targeted attacker who researched this specific application. This is consistent with the threat intelligence findings in Section 3.3, which show this IP has a prior history of SSH/Telnet brute-force activity — this web server was very likely opportunistically discovered, not deliberately targeted.
 
 ### 3.2 Log Analysis — Successful Login
-![Successful Login](soc246-screenshots/05-successful-login.png)
+![Successful Login](../Screenshots/soc246/05-successful-login.png)
 *02:15 PM — admin account, action: "User Login Successful."*
 
 **Evidence gap:** This log entry does not include a password field (unlike the failed-attempt logs), so the specific password that succeeded **cannot be confirmed** from the evidence gathered. It is not possible to state with certainty whether the successful password matches one of the three examples shown, an unshown attempt from the full set of 12, or was otherwise obtained. This should be treated as an open item — if the credential can be recovered from a fuller log export, it should be checked against the organization's password policy, as a guessable/weak admin password would be a separate, significant root-cause finding.
 
 ### 3.3 Threat Intelligence — Source IP
-![VirusTotal Source IP](soc246-screenshots/06-vt-source-ip.png)
+![VirusTotal Source IP](../Screenshots/soc246/06-vt-source-ip.png)
 *VirusTotal — 120.48.36.175 (AS38365, Beijing Baidu Netcom Science and Technology Co., Ltd., China) flagged 4/91 as malicious. Crowdsourced context: "SSH bruteforce Attackers" (ArcSight Threat Intelligence); CrowdSec CTI behaviors: SSH Bruteforce / TELNET Bruteforce.*
 
-![AbuseIPDB Source IP](soc246-screenshots/07-abuseipdb-source-ip.png)
+![AbuseIPDB Source IP](../Screenshots/soc246/07-abuseipdb-source-ip.png)
 *AbuseIPDB — 120.48.36.175 reported 2,583 times. ISP: Beijing Baidu Netcom Science and Technology Co., Ltd. Usage type: Data Center/Web Hosting/Transit.*
 
 The extremely high report count (2,583) combined with documented SSH/Telnet brute-force history confirms this is a known, persistent malicious scanning source — not a one-off incident.

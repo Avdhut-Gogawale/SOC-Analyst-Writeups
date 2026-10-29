@@ -23,7 +23,7 @@ A threat intelligence feed (`cti-report.io`) detected that a **typosquat domain 
 | New MX Record | mail.mailerhost[.]net |
 | Device Action | Allowed |
 
-![Alert Detail](soc326-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc326/01-alert-detail.png)
 *SIEM alert detail — SOC326, EventID 304, "Impersonating Domain MX Record Change Detected."*
 
 ---
@@ -44,7 +44,7 @@ A threat intelligence feed (`cti-report.io`) detected that a **typosquat domain 
 ## 3. Investigation Steps
 
 ### 3.1 CTI Alert Review
-![CTI Domain Description](soc326-screenshots/02-cti-domain-description.png)
+![CTI Domain Description](../Screenshots/soc326/02-cti-domain-description.png)
 *CTI alert description — impersonating domain `letsdefwnd[.]io`, phishing keyword match ("letsdefend," similarity score 55), MX record `mail.mailerhost.net`. Registrar: Sav.com, LLC. Creation Date: Fri, 22 Sep 2023. Status: clientTransferProhibited.*
 
 **Finding — domain aging:** The domain was registered approximately **one year before** it was activated for phishing. This is a known evasion technique: attackers register lookalike domains early and allow them to sit dormant to accumulate DNS/reputation age, since newly-registered domains are more likely to be automatically flagged by security tooling. This domain's dormancy period suggests deliberate, patient campaign preparation rather than opportunistic, last-minute registration.
@@ -52,22 +52,22 @@ A threat intelligence feed (`cti-report.io`) detected that a **typosquat domain 
 ### 3.2 Phishing Email Delivery
 The following day, a phishing email using the impersonating domain was delivered to user Mateo:
 
-![Phishing Email](soc326-screenshots/03-phishing-email.png)
+![Phishing Email](../Screenshots/soc326/03-phishing-email.png)
 *"Congratulations! You've Won a Voucher" — sent from voucher@letsdefwnd.io to mateo@letsdefend.io, using a reward/urgency lure and a "Claim Your Voucher" button linking to http://letsdefwnd.io/.*
 
 This confirms the CTI alert's prediction: the impersonating domain, once its mail infrastructure (MX record) was in place, was used within a day to launch an active phishing campaign against an internal user.
 
 ### 3.3 Proxy Log — Confirming the Click
-![Proxy Log](soc326-screenshots/04-proxy-log.png)
+![Proxy Log](../Screenshots/soc326/04-proxy-log.png)
 *Proxy log — 172.16.17.162 (Mateo), chrome.exe, requested https://letsdefwnd.io/ at 01:32:13 PM, port 443, Device Action: Allowed.*
 
 **Confirmed:** Mateo clicked the phishing link and successfully reached the attacker-controlled domain. **Not confirmed:** whether any credentials or information were submitted on the resulting page — no POST request or credential-data log entry was found in the evidence reviewed. This distinction matters for scoping the response; see Section 6.
 
 ### 3.4 Threat Intelligence — Hosting Infrastructure
-![VirusTotal Hosting IP](soc326-screenshots/05-vt-hosting-ip.png)
+![VirusTotal Hosting IP](../Screenshots/soc326/05-vt-hosting-ip.png)
 *VirusTotal — 45.33.23.183 (AS63949, Akamai Connected Cloud, US) flagged malicious/suspicious by 2/91 vendors.*
 
-![AbuseIPDB Hosting IP](soc326-screenshots/06-abuseipdb-hosting-ip.png)
+![AbuseIPDB Hosting IP](../Screenshots/soc326/06-abuseipdb-hosting-ip.png)
 *AbuseIPDB — 45.33.23.183 reported 85 times. ISP: Linode, hostname 45-33-23-183.ip.linodeusercontent.com.*
 
 **Note:** "Akamai Connected Cloud" (VirusTotal) and "Linode" (AbuseIPDB) refer to the same underlying infrastructure — Akamai acquired Linode and rebranded its cloud hosting division; this is not a data inconsistency.

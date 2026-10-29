@@ -32,7 +32,7 @@ User **Dylan (dylan@letsdefend.io / 172.16.17.216)** received a phishing email i
 | Payload File Hash (SHA256) | 15c80b5be235bf2a8c38291eb697a702c07dde087eb459e9ea46a2bee17c5f03 |
 | Device Action | Allowed |
 
-![Alert Detail](soc338-screenshots/01-alert-detail.png)
+![Alert Detail](../Screenshots/soc338/01-alert-detail.png)
 *SIEM alert detail — SOC338, EventID 316, "Lumma Stealer - DLL Side-Loading via Click Fix Phishing." Trigger reason: redirected site contains a ClickFix-type script for Lumma Stealer distribution.*
 
 ---
@@ -56,20 +56,20 @@ User **Dylan (dylan@letsdefend.io / 172.16.17.216)** received a phishing email i
 ## 3. Investigation Steps
 
 ### 3.1 Phishing Email
-![Phishing Email](soc338-screenshots/02-phishing-email.png)
+![Phishing Email](../Screenshots/soc338/02-phishing-email.png)
 *"Upgrade your system to Windows 11 Pro for FREE" — impersonates Microsoft, uses a countdown timer ("Before the action ends: 4 Days 23 Hours 59 Mins") to create urgency, with an "UPDATE NOW" call-to-action button.*
 
 The sender domain `windows-update.site` is a lookalike impersonating Microsoft's legitimate update infrastructure, using a `.site` TLD commonly abused for low-cost, disposable phishing domains.
 
 ### 3.2 Confirming the Click
-![Proxy Log](soc338-screenshots/03-proxy-log-click.png)
+![Proxy Log](../Screenshots/soc338/03-proxy-log-click.png)
 *Proxy log — 172.16.17.216 requested https://windows-update.site/ at 11:26 PM, HTTP 200 OK, Referrer: https://mail.letsdefend.io/ — confirming the click originated from the webmail client.*
 
-![Endpoint Browser History](soc338-screenshots/05-endpoint-browser-history.png)
+![Endpoint Browser History](../Screenshots/soc338/05-endpoint-browser-history.png)
 *Endpoint security browser history — confirms the visit to windows-update.site at 2025-03-13 23:26:08, corroborating the proxy log.*
 
 ### 3.3 ClickFix Execution Chain — Terminal History
-![Endpoint Terminal History](soc338-screenshots/06-endpoint-terminal-history.png)
+![Endpoint Terminal History](../Screenshots/soc338/06-endpoint-terminal-history.png)
 *Three PowerShell commands executed within 13 seconds of each other (23:26:19 – 23:26:32).*
 
 Full command sequence recovered:
@@ -91,14 +91,14 @@ Full command sequence recovered:
 **Fake CAPTCHA comment:** The trailing comment (`# ✅ ''I am not a robot - reCAPTCHA Verification ID: 3824''`) is cosmetic — it serves no functional purpose in the command, and exists purely as part of the social-engineering pretext (making the pasted/executed command look, to a distracted or non-technical viewer, like a legitimate CAPTCHA verification string rather than malicious code).
 
 ### 3.4 mshta.exe Execution — Full Process Detail
-![Firewall mshta Request](soc338-screenshots/04-firewall-mshta-request.png)
+![Firewall mshta Request](../Screenshots/soc338/04-firewall-mshta-request.png)
 *Firewall log — mshta.exe (PID 7284) requests https://overcoatpassably.shop/Z8UZbPyVpGfdRS/maloy.mp4, action: Allowed.*
 
-![Endpoint mshta Full Detail](soc338-screenshots/11-endpoint-mshta-full-detail.png)
+![Endpoint mshta Full Detail](../Screenshots/soc338/11-endpoint-mshta-full-detail.png)
 *Full EDR process detail — mshta.exe (PID 7284), parent: powershell.exe, File Hash: 15c80b5be235bf2a8c38291eb697a702c07dde087eb459e9ea46a2bee17c5f03, Process User: EC2AMAZ-ILGVOIN\LetsDefend, Target Process Command Line spawns conhost.exe (`0xffffffff -ForceV1`).*
 
 ### 3.5 The ".mp4" File Is Not a Video — Confirmed
-![VirusTotal File Hash](soc338-screenshots/12-vt-file-hash-maloy-mp4.png)
+![VirusTotal File Hash](../Screenshots/soc338/12-vt-file-hash-maloy-mp4.png)
 *VirusTotal — file `maloy.mp4` flagged malicious by 21/59 vendors. Threat label: **trojan.sagent/emmenhtal**. Threat category: trojan. Family labels: sagent, emmenhtal, htadl.*
 
 **Key finding:** Despite the `.mp4` extension, VirusTotal's own file-type detection classifies this file's **content type as "text"** (visible in the file-type icon and metadata), not video/media. This confirms the extension is cosmetic — the actual file is a script (consistent with an HTA/JScript or VBScript payload, given the `htadl` family label and mshta.exe as the executing process). The `.mp4` name exists purely to:
@@ -110,18 +110,18 @@ The `emmenhtal` family label identifies this specifically as the **Emmenhtal loa
 ### 3.6 Threat Intelligence Enrichment
 
 **Phishing landing URL:**
-![VirusTotal windows-update.site](soc338-screenshots/07-vt-windows-update-url.png)
+![VirusTotal windows-update.site](../Screenshots/soc338/07-vt-windows-update-url.png)
 *VirusTotal — windows-update.site flagged malicious/malware by 12/92 vendors.*
 
 **Payload delivery URL:**
-![VirusTotal overcoatpassably.shop](soc338-screenshots/08-vt-overcoatpassably-url.png)
+![VirusTotal overcoatpassably.shop](../Screenshots/soc338/08-vt-overcoatpassably-url.png)
 *VirusTotal — overcoatpassably.shop/.../maloy.mp4 flagged malicious/malware by 14/92 vendors.*
 
 **SMTP source IP:**
-![VirusTotal SMTP IP](soc338-screenshots/09-vt-smtp-ip.png)
+![VirusTotal SMTP IP](../Screenshots/soc338/09-vt-smtp-ip.png)
 *VirusTotal — 132.232.40.201 (AS45090, Shenzhen Tencent Computer Systems Company Limited, China) flagged malicious by 3/91 vendors.*
 
-![AbuseIPDB SMTP IP](soc338-screenshots/10-abuseipdb-smtp-ip.png)
+![AbuseIPDB SMTP IP](../Screenshots/soc338/10-abuseipdb-smtp-ip.png)
 *AbuseIPDB — 132.232.40.201 reported 5 times. ISP: Tencent Cloud Computing (Beijing) Co., Ltd.*
 
 All three infrastructure indicators (phishing domain, payload delivery domain, SMTP source IP) are independently confirmed malicious across threat intelligence platforms.
